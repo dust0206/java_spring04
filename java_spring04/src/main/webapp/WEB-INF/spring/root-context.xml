@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+	
+	<!-- bean 자바 객체 -->
+	<!-- id 변수명 class 자료형  -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521/xe"/>
+		<property name="username" value="lifesoft" />
+		<property name="password" value="lifesoft!" />
+	</bean>
+	
+	<!--  -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- mybatis 설정파일의 위치 -->
+		<property name="configLocation" value="classpath:/mybatis-config.xml" />
+		<!-- 
+			mybatis mapper 파일의 경로
+			와일드카드 /** 모든 하위 디렉토리 * 모든 이름
+		 -->
+		<property name="mapperLocations" value="classpath:mappers/**/*.xml" />
+	</bean>
+	
+	<!-- sql 명령을 실행하는 객체 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate" destroy-method="clearCache">  <!--  auto close -->
+		<constructor-arg name="sqlSessionFactory" ref="sqlSessionFactory" />
+	</bean>
+	
+	<!-- 
+		mybatis-spring 태그가 있는데 scan이라는 것은 mybatis 객체를 자동으로 검색해서 메모리에 올리라는 의미
+		base-package : root package를 말한다 그 하위에 있는 모든 class들을 탐색해서 메모리에 올린다.
+	 -->
+	 <mybatis-spring:scan base-package="com.example.spring04" />	
+	 
+</beans>

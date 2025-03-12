@@ -1,0 +1,63 @@
+
+상품관리 table
+create table product (
+	product_code number primary key,
+	product_name varchar2(500) not null,
+	description varchar2(4000),
+	price number default 0,
+	filename varchar2(500)
+);
+
+ COMMENT ON TABLE "LIFESOFT"."PRODUCT"  IS '상품관리 테이블';
+ 
+COMMENT ON COLUMN "PRODUCT"."PRODUCT_CODE" IS '상품코드';
+COMMENT ON COLUMN "PRODUCT"."PRODUCT_NAME" IS '상품이름';
+COMMENT ON COLUMN "PRODUCT"."DESCRIPTION" IS '설명';
+COMMENT ON COLUMN "PRODUCT"."PRICE" IS '금액';
+COMMENT ON COLUMN "PRODUCT"."FILENAME" IS '첨부파일 이미지';
+
+상품코드를 위한 시퀀스 생성
+create sequence product_seq
+start with 1
+increment by 1;
+
+
+관리자 table
+
+create table admin (
+	userid varchar2(50) primary key,
+	passwd varchar2(50) not null,
+	name varchar2(50) not null
+);
+
+
+insert into admin (userid, passwd, name) values ('admin','1234','관리자');
+
+
+
+
+상품등록, 수정, 삭제 실습 예제
+
+spring04/admin/login_check.do
+spring04/admin/login_out.do
+
+spring04/shop/product/product_write.do
+spring04/shop/product/product_edit.do
+spring04/shop/product/product_update.do
+spring04/shop/product/product_delete.do
+
+AdminController.java =>
+	AdminService.java
+	AdminServiceImpl.java
+	AdminDAO.java
+	AdminDAOImpl.java
+	AdminDTO.java 레코드 저장
+	admin.xml
+	
+login.jsp
+admin.jsp
+product_write.jsp
+product_edit.jsp
+
+	
+	
